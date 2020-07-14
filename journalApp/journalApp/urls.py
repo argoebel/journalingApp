@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # User urls
-    url(r'^user/', UserAPIView.as_view(), name='create_user'),
+    url(r'^user/create/$', UserAPIView.as_view(), name='create_user'),
+    path('user/<uuid:pk>', UserAPIView.as_view(), name='get_user'),
 ]
