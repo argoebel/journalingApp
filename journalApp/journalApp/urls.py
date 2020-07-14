@@ -24,4 +24,6 @@ urlpatterns = [
     # User urls
     url(r'^user/create/$', UserAPIView.as_view(), name='create_user'),
     path('user/<uuid:pk>', UserAPIView.as_view(), name='get_user'),
+    path('user/edit/<uuid:pk>', UserAPIView.as_view(), name='edit_user'),
+    path('user/delete/<uuid:pk>', UserAPIView.as_view(), name='delete_user'),
 ]

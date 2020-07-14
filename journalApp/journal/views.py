@@ -17,7 +17,6 @@ class UserAPIView(APIView):
         serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.create(serializer.validated_data)
-
         return Response(
             request.data,
             status=status.HTTP_200_OK
@@ -25,11 +24,28 @@ class UserAPIView(APIView):
 
     def get(self, request, *args, **kwargs):
         print("GET USER")
-        print(request.data)
-        print(self.kwargs['pk'])
         user = User.objects.get(pk=self.kwargs['pk'])
         serializer = UserSerializer(user)
         return Response(
             serializer.data,
             status=status.HTTP_200_OK
+        )
+
+    def put(self, request, *args, **kwargs):
+        print("EDIT USER")
+        user = User.objects.get(pk=self.kwargs['pk'])
+        serializer = UserSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.update(user, serializer.validated_data)
+        return Response(
+            serializer.data,
+            status=status.HTTP_200_OK
+        )
+
+    def delete(self, request, *args, **kwargs):
+        print("DELETE USER")
+        user = User.objects.get(pk=self.kwargs['pk'])
+        user.delete()
+        return Response(
+            status=status.HTTP_204_NO_CONTENT
         )
