@@ -16,14 +16,24 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path
-from journal.views import UserAPIView
+from journal.views import UserAPIView, UserAuthAPIView, PostAPIView
+from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    # User urls
-    url(r'^user/create/$', UserAPIView.as_view(), name='create_user'),
+    # User URLs
+    url(r'^user/create', UserAuthAPIView.as_view(), name='create_user'),
+    url(r'^user/login', obtain_auth_token, name='login_user'),
+    url(r'^user/logout', UserAuthAPIView.as_view(), name='logout_user'),
     path('user/<uuid:pk>', UserAPIView.as_view(), name='get_user'),
     path('user/edit/<uuid:pk>', UserAPIView.as_view(), name='edit_user'),
     path('user/delete/<uuid:pk>', UserAPIView.as_view(), name='delete_user'),
+
+    # Post URLs
+    url(r'^post/create', PostAPIView.as_view(), name='create_post'),
+    path('post/edit/<uuid:pk>', PostAPIView.as_view(), name='edit_post'),
+    path('post/delete/<uuid:pk>', PostAPIView.as_view(), name='delete_post'),
+
+
 ]

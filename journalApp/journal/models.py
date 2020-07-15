@@ -13,3 +13,4 @@ class Post(models.Model):
     content = models.CharField(max_length=5000)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
+    uuid = models.UUIDField(primary_key=True, default=uuid4, unique=True)
